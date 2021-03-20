@@ -1,11 +1,13 @@
-require('colors')
+require('dotenv').config()// Libreria para utilizar variables de entorno
+require('colors')// libreria para colores de string
 const {
     inquirerMenu,
     pausa,
     leerInput,
 
-} = require('./helpers/inquirer');
-const Busquedas = require('./models/busquedas');
+} = require('./helpers/inquirer');// importacion de inquirer
+const Busquedas = require('./models/busquedas');// importacion de clase
+// console.log(process.env.MAPBOX_KEY);// Comprobacion de que la variable de entorno MAPBOX_KEY esta incluida en process.env
 
 
 const main = async () => {
@@ -17,9 +19,11 @@ const main = async () => {
         opt = await inquirerMenu();
         switch (opt) {
             case 1:
-
-
                 // Mostrar mensaje si la persona escribe
+                const lugar = await leerInput('Ciudad: ');
+                await busquedas.ciudad(lugar);
+
+
 
                 // Buscar los lugares
 
@@ -29,12 +33,12 @@ const main = async () => {
 
                 // Mostrar resultados
                 console.log('\ninformacion de la ciudad\n'.green);
-                console.log('\nCiudad\n');
-                console.log('\nLat:\n');
-                console.log('\nLng:\n');
-                console.log('\nTemperaturas:\n');
-                console.log('\nMinima:\n');
-                console.log('\nMaxima:\n');
+                console.log('Ciudad',);
+                console.log('Lat:',);
+                console.log('Lng:',);
+                console.log('Temperaturas:',);
+                console.log('Minima:',);
+                console.log('Maxima:',);
 
                 break;
             case 2:
