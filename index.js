@@ -1,9 +1,11 @@
 require('dotenv').config()// Libreria para utilizar variables de entorno
 require('colors')// libreria para colores de string
+const { leerDb } = require('../04-Todo-node/helpers/guardarArchivo');
 const {
     inquirerMenu,
     pausa,
     leerInput,
+    listarLugares,
 
 } = require('./helpers/inquirer');// importacion de inquirer
 const Busquedas = require('./models/busquedas');// importacion de clase
@@ -12,6 +14,7 @@ const Busquedas = require('./models/busquedas');// importacion de clase
 
 const main = async () => {
     const busquedas = new Busquedas();
+
     let opt;
 
 
@@ -20,28 +23,45 @@ const main = async () => {
         switch (opt) {
             case 1:
                 // Mostrar mensaje si la persona escribe
-                const lugar = await leerInput('Ciudad: ');
-                await busquedas.ciudad(lugar);
+                const termino = await leerInput('Ciudad: ');// Termino de busqueda
+                //Buscar lugares
+                const lugares = await busquedas.ciudad(termino);// Utilizando metodo ciudad de nuestra clase busquedas
+                //Seleccionar lugar
+                const id = await listarLugares(lugares);// Utilizando el metodo listar lugares del inquirer.js,mandando como argumentos lugares
+                if (id === 0) continue;// Con esta linea de codigo conseguimos que el cancelar no de fallo(el comportamiento de continue
+                // es el de que si se cumple la condicion ejecute la siguiente linea del codigo)
 
 
+                const lugarSel = lugares.find(l => l.id === id);
 
-                // Buscar los lugares
+                // Guardar en DB
+                busquedas.agregarHistorial(lugarSel.nombre)// En esta linea de codigo,utilizamos como argumento lugarSel.nombre para agregarlo a nuestrta DB
 
-                // Seleccionar el lugar
 
                 // Clima
+                const clima = await busquedas.climaLugar(lugarSel.lat, lugarSel.lng)// Mandamos como argumentos lugarSel.lat, lugarSel.lng
+                // console.log(clima);
+
 
                 // Mostrar resultados
+                console.clear();
                 console.log('\ninformacion de la ciudad\n'.green);
-                console.log('Ciudad',);
-                console.log('Lat:',);
-                console.log('Lng:',);
-                console.log('Temperaturas:',);
-                console.log('Minima:',);
-                console.log('Maxima:',);
+                console.log('Ciudad:', lugarSel.nombre);
+                console.log('Lat:', lugarSel.lat);
+                console.log('Lng:', lugarSel.lng);
+                console.log('Temperaturas:', clima.temp);
+                console.log('Minima:', clima.tempMin);
+                console.log('Maxima:', clima.tempMax);
+                console.log(`Como esta el clima: ${clima.desc.green}`);
 
                 break;
             case 2:
+                busquedas.historialCapitalizado.forEach((lugar, i) => {
+                    // busquedas.historial.forEach((lugar, i) => {
+                    const idx = `${i + 1}.`.green;
+
+                    console.log(`${idx} ${lugar}`);
+                })
 
 
 
@@ -50,7 +70,7 @@ const main = async () => {
                 break;
             case 0:
 
-                console.log({ opt });
+
 
 
                 break;
@@ -66,4 +86,6 @@ const main = async () => {
 
 
 }
+
 main()
+

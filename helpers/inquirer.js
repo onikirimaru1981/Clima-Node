@@ -30,10 +30,13 @@ const preguntas = [
 
 const inquirerMenu = async () => {
 
+
+    const espacio = '                                                                    '
+
     console.clear();
-    console.log('============================'.green);
-    console.log('   Seleccione una opción  '.white);
-    console.log('============================\n'.green);
+    console.log(espacio + '============================'.green);
+    console.log(espacio + '   Seleccione una opción  '.white);
+    console.log(espacio + '============================\n'.green);
 
     const { opcion } = await inquirer.prompt(preguntas);// desestructuracion de opciones
 
@@ -90,25 +93,21 @@ const leerInput = async (message) => {
 
 
 
-const listadoTareasBorrar = async (tareas = []) => {
-    const choices = tareas.map((tarea, i) => {// Gracias al metodo nmap obtendremos un nuevo areglo pero con los hijos transformados
+const listarLugares = async (lugares = []) => {
+    const choices = lugares.map((lugar, i) => {
 
         const idx = `${i + 1}.`.green;
-        return {// Con este return el nuevo areglo tendra estos nuevos cambios
+        return {
 
-            value: tarea.id,
-            name: `${idx} ${tarea.desc}`
+            value: lugar.id,
+            name: `${idx} ${lugar.nombre}`
         }
 
-        // run:
-        // {
-        //     value: 'fac4e077-4acd-4960-bbe4-28062057bc76',
-        //     name : '\x1B[32m1.\x1B[39m Dominar el multiverso'
-        // }
-    });
-    choices.unshift({// Con choices.unshift agrego una nueva opcion al inicio del areglo// Opcion para salir del muno actual
 
-        value: '0',
+    });
+    choices.unshift({
+
+        value: 0,
         name: '0.'.green + ' Cancelar'.red
     })
     // Preguntas que seran llamadas con el inquirer.prompt
@@ -116,8 +115,8 @@ const listadoTareasBorrar = async (tareas = []) => {
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar',
-            choices// Este choices(opciones) es la const declarada arrihba con  el metodo map
+            message: 'Seleccione lugar',
+            choices
 
         }
     ];
@@ -187,7 +186,7 @@ module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
-    listadoTareasBorrar,
+    listarLugares,
     confirmar,
     mostrarListadoChecklist
 
