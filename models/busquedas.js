@@ -57,7 +57,7 @@ class Busquedas {
             //Peticion http
             // Codigo para hacer peticiones http con la libreria axios
             // Para simplificar y mejorar el codigo utilizaremos esta sintaxis de axios para la peticion
-            //https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json?access_token=pk.eyJ1Ijoib25pa2lyaW1hcnUxOTgxIiwiYSI6ImNrbWd3dGdhNjAxcjIycG5hZWp1b2lmMDAifQ.FoYpBTEwxn8vnVk5A0d1zw&limit=5&language=es
+            //https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json?access_token=XXXXXXXXXXXXXXXX&limit=5&language=es
             const instance = axios.create({
 
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
