@@ -39,7 +39,7 @@ class Busquedas {
             'limit': 10,
             'language': 'es'
         }
-    }//lat=40.41889&lon=-3.69194&appid=e6bc76b420fe43d5359db8daf1a2b057&units=metric&lang=es
+    }//lat=40.41889&lon=-3.69194&appid=XXXXXX&units=metric&lang=es
     get paramsWeather() {
 
         return {// Parametros peticion weather
